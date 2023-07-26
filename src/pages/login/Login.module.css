@@ -1,0 +1,26 @@
+.githubLogo {
+  height: 110px;
+}
+
+.submitButton {
+  margin-bottom: 20px;
+}
+
+.emailInput {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 120%; /* Make the text box 20% wider */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+  padding: 10px; /* Add padding for better appearance */
+}
+
+.submitButton {
+  margin-bottom: 20px;
+  width: 120%; /* Make the button 20% wider */
+  background-color: rgb(0, 79, 128); /* Change the button color to blue */
+  color: white; /* Set the button text color to white */
+  padding: 10px; /* Add padding for better appearance */
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+  font-weight: bold;
+}
