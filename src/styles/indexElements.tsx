@@ -26,3 +26,9 @@ export const InputContainer = styled.div`
 export const FormContainer = styled.div`
   margin-top: 20;
 `;
+
+export const WarningMessage = styled.p`
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+`;
