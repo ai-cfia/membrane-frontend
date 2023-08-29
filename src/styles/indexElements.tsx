@@ -32,3 +32,9 @@ export const WarningMessage = styled.p`
   font-size: 14px;
   margin-top: 5px;
 `;
+
+export const SuccessMessage = styled.p`
+  color: green;
+  font-size: 14px;
+  margin-top: 5px;
+`;
