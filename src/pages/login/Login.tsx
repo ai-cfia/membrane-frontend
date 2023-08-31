@@ -15,6 +15,15 @@ const Home: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
   const [emailSent, setEmailSent] = useState<boolean>(false);
+  const [clientAppToken, setClientAppToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tokenFromURL = urlParams.get("token");
+    if (tokenFromURL !== null && tokenFromURL !== "") {
+      setClientAppToken(tokenFromURL);
+    }
+  }, []);
 
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setEmail(e.target.value);
@@ -30,27 +39,40 @@ const Home: React.FC = () => {
 
       if (emailRegex.test(email)) {
         try {
-          const response = await fetch("http://127.0.0.1:5000/authenticate", {
+          const tokenValue = clientAppToken ?? "";
+          const defaultUrl = "http://127.0.0.1:5000/authenticate";
+          const apiUrl = process.env.LOGIN_SERVICE_URL ?? defaultUrl;
+          console.log("API URL:", apiUrl);
+          if (apiUrl === "") {
+            // Handle the case where apiUrl is an empty string explicitly.
+            throw new Error("API URL is not set.");
+          }
+
+          const urlWithToken = `${apiUrl}?token=${tokenValue}`;
+
+          const responseData = await fetch(urlWithToken, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            credentials: "include", // This is crucial
-            body: JSON.stringify({ email }), // Using ES6 object shorthand syntax
+            credentials: "include",
+            body: JSON.stringify({ email }),
+          }).then(async (res) => {
+            if (!res.ok) {
+              throw new Error("Server response was not ok");
+            }
+            return await res.json();
           });
 
-          if (!response.ok) {
-            throw new Error("Server response was not ok");
-          }
-
-          const responseData = await response.json();
           console.log(responseData);
-          console.log("Valid Email submitted:", email);
-          setIsValidEmail(true);
-          setEmailSent(true); // Set email sent state to true after a successful dispatch
+          setEmailSent(true); // Setting emailSent to true here
+          console.log("setEmailSent called with true");
+
           setTimeout(() => {
             setEmailSent(false); // Reset email sent state after 5 seconds
           }, 5000);
+
+          // ... the rest of your logic ...
         } catch (error) {
           console.error("Error sending email:", error);
         }
