@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import type { ChangeEvent, FormEvent } from "react"; // Use 'import type' for types
 import styles from "./Login.module.css";
-import cfia from "../../assets/CFIA_SmartSearch_Logo.png";
+import cfia from "../../assets/CFIA_Membrane_Logo.png";
 import {
   LayoutContainer,
   LogoContainer,
@@ -40,8 +40,9 @@ const Home: React.FC = () => {
       if (emailRegex.test(email)) {
         try {
           const tokenValue = clientAppToken ?? "";
-          const defaultUrl = "http://127.0.0.1:5000/authenticate";
-          const apiUrl = process.env.LOGIN_SERVICE_URL ?? defaultUrl;
+          const defaultUrl = "";
+          const apiUrl =
+            process.env.REACT_APP_MEMBRANE_BACKEND_URL ?? defaultUrl;
           console.log("API URL:", apiUrl);
           if (apiUrl === "") {
             // Handle the case where apiUrl is an empty string explicitly.
